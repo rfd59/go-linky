@@ -20,7 +20,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: ${{ vars.GO_VERSION }}
 
       - name: Install dependencies
         run: |
@@ -44,7 +44,7 @@ jobs:
   cd-docker:
     name: Continous Delivry - Docker
     needs: ci
-    if: github.ref_name == 'develop'
+    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -69,7 +69,7 @@ jobs:
   cd-assets:
     name: Continous Delivry - Assets
     needs: ci
-    if: github.ref_name == 'develop'
+    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
