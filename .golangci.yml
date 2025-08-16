@@ -1,0 +1,11 @@
+linters:
+  enable:
+    - errcheck
+
+issues:
+  exclude-use-default: false
+
+linters-settings:
+  errcheck:
+    exclude-functions:
+    - (serial.Port).Close
