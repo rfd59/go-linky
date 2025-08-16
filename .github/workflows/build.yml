@@ -6,7 +6,6 @@ on:
   push:
     branches-ignore: [main]
   pull_request:
-  workflow_dispatch:
 
 jobs:
 
@@ -40,6 +39,7 @@ jobs:
             npx github-actions-ctrf summary ctrf-report.json
             npx github-actions-ctrf failed ctrf-report.json
         if: always()
+      - run: export
 
   cd-docker:
     name: Continous Delivry - Docker
