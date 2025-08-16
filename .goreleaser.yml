@@ -34,9 +34,8 @@ archives:
 changelog:
   #disable: true
   use: github
-  format: "{{.SHA}}: {{.Message}} (@{{.AuthorUsername}})"
   sort: asc
-  abbrev: -1
+  title: "Release Notes"
   groups:
     - title: Features
       regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
@@ -50,6 +49,7 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+      - "^skip:"
 
 release:
   footer: >-
