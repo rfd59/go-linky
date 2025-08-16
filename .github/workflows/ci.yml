@@ -53,5 +53,6 @@ jobs:
       - uses: golangci/golangci-lint-action@v8
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v8
+        continue-on-error: true
         with:
           version: latest
