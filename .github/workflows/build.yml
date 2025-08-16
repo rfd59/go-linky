@@ -41,8 +41,7 @@ jobs:
             npx github-actions-ctrf summary ctrf-report.json
             npx github-actions-ctrf failed ctrf-report.json
         if: always()
-        
-      - run: export
+
 
   cd-docker:
     name: Continous Delivry - Docker
@@ -69,6 +68,7 @@ jobs:
           push: true
           tags: ${{ vars.IMAGE_NAME}}:snapshot
 
+          
   cd-assets:
     name: Continous Delivry - Assets
     needs: ci
