@@ -56,3 +56,6 @@ jobs:
         continue-on-error: true
         with:
           version: latest
+      - name: Run tests
+        run: |
+          echo tests
