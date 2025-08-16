@@ -28,14 +28,13 @@ func TestLinky_ReadTiC_FrameNotValid(t *testing.T) {
 		"no ETX": {frame: []byte{02, 10, 56, 13}, expected: "frame does not end with ETX (0x03) character"},
 	} {
 		t.Run(id, func(t *testing.T) {
-
 			// Test the ReadTic function
 			service := &services.LinkyService{}
 			data, err := service.ReadTic(testCase.frame, nil)
 
 			// Assert the expected behavior
 			require.Error(err, "Expected an error for invalid frame")
-			assert.EqualError(err, testCase.expected, "Error message does not match expected")
+			require.EqualError(err, testCase.expected, "Error message does not match expected")
 			assert.Nil(data, "Expected data to be nil for invalid frame")
 		})
 	}
@@ -54,7 +53,7 @@ func TestLinky_ReadTiC_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected an error for invalid dataset format")
-	assert.EqualError(err, "no datasets found in the frame", "Error message does not match expected")
+	require.EqualError(err, "no datasets found in the frame", "Error message does not match expected")
 	assert.Nil(data, "Expected data to be nil for invalid frame")
 }
 
@@ -113,7 +112,6 @@ func TestLinky_OpenPort_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected error when opening the serial port")
-	assert.EqualError(err, fmt.Sprintf("failed to open the serial port %q: %s", "COM1", "mock error..."), "Expected specific error message when opening the serial port fails")
+	require.EqualError(err, fmt.Sprintf("failed to open the serial port %q: %s", "COM1", "mock error..."), "Expected specific error message when opening the serial port fails")
 	assert.Nil(port, "Expected no port to be returned when opening the serial port fails")
-
 }

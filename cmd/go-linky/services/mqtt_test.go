@@ -12,7 +12,6 @@ import (
 )
 
 func TestMqtt_Publish_ConnectionFailed(t *testing.T) {
-	assert := assert.New(t)
 	require := require.New(t)
 
 	// Test the GetSerialPort function
@@ -23,11 +22,10 @@ func TestMqtt_Publish_ConnectionFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "failed to etablish a connection to MQTT: no servers defined to connect to")
+	require.EqualError(err, "failed to etablish a connection to MQTT: no servers defined to connect to")
 }
 
 func TestMqtt_Publish_MessageFailed(t *testing.T) {
-	assert := assert.New(t)
 	require := require.New(t)
 
 	// Mock
@@ -41,11 +39,10 @@ func TestMqtt_Publish_MessageFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "message can't be build: null value")
+	require.EqualError(err, "message can't be build: null value")
 }
 
 func TestMqtt_Publish_Failed(t *testing.T) {
-	assert := assert.New(t)
 	require := require.New(t)
 
 	// Mock
@@ -60,7 +57,7 @@ func TestMqtt_Publish_Failed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "failed to publish the message to MQTT: mock error...")
+	require.EqualError(err, "failed to publish the message to MQTT: mock error...")
 }
 
 func TestMqtt_Publish_Success(t *testing.T) {
@@ -96,7 +93,6 @@ func TestMqtt_GetTopicName(t *testing.T) {
 		"full":   {topic: "my/custom", adco: "123456789", expected: "my/custom"},
 	} {
 		t.Run(id, func(t *testing.T) {
-
 			// Test the GetTopicName function
 			service := &services.MqttService{}
 			data := service.GetTopicName(testCase.topic, testCase.adco)

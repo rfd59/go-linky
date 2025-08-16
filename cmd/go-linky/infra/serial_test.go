@@ -23,9 +23,8 @@ func TestSerial_GetPortsList(t *testing.T) {
 	if os.Getenv("CI_JOB_ID") != "" { // If running in GitLab Pipeline, we expect a specific number of ports
 		assert.Len(ports, 4, "Expected four ports to be returned when running the test")
 	} else {
-		assert.Len(ports, 0, "Expected no ports to be returned when running the test")
+		assert.Empty(ports, "Expected no ports to be returned when running the test")
 	}
-
 }
 
 func TestSerial_Open(t *testing.T) {

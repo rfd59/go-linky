@@ -9,13 +9,11 @@ import (
 	mock_test "rfd59/go-linky/test/mock"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/thejerf/slogassert"
 )
 
 func TestCore_Run_OpenPortFailed(t *testing.T) {
-	assert := assert.New(t)
 	require := require.New(t)
 
 	// Test the GetPortsList function
@@ -27,11 +25,10 @@ func TestCore_Run_OpenPortFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "failed to open the serial port \"COM1\": no such file or directory")
+	require.EqualError(err, "failed to open the serial port \"COM1\": no such file or directory")
 }
 
 func TestCore_Run_ReadPortFailed(t *testing.T) {
-	assert := assert.New(t)
 	require := require.New(t)
 
 	// Test the GetPortsList function
@@ -43,7 +40,7 @@ func TestCore_Run_ReadPortFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "port is unavailable to read from: multiple Read calls return no data or error")
+	require.EqualError(err, "port is unavailable to read from: multiple Read calls return no data or error")
 }
 
 func TestCore_Run_FrameLoop(t *testing.T) {

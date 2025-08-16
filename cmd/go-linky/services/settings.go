@@ -32,6 +32,10 @@ func NewSettingsService(serialService ISerialService) (s *SettingsService, err e
 	return s, nil
 }
 
+func (s *SettingsService) Get() *models.Settings {
+	return s.settings
+}
+
 func (s *SettingsService) loadSettings() {
 	s.loadLinkySettings()
 	s.loadMqttSettings()
@@ -87,8 +91,4 @@ func (s *SettingsService) getLinkySerialSetting() {
 			StopBits: serial.OneStopBit,
 		}
 	}
-}
-
-func (s *SettingsService) Get() *models.Settings {
-	return s.settings
 }
