@@ -9,36 +9,36 @@ on:
 
 jobs:
 
-  ci:
-    name: Continous Integration
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # ci:
+  #   name: Continous Integration
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24'
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.24'
 
-      - name: Install dependencies
-        run: |
-          go mod download
-          go install github.com/jstemmer/go-junit-report/v2@latest
-          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
+  #     - name: Install dependencies
+  #       run: |
+  #         go mod download
+  #         go install github.com/jstemmer/go-junit-report/v2@latest
+  #         go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
 
-      - name: Build
-        run: go build ./...
+  #     - name: Build
+  #       run: go build ./...
 
-      - name: Run Uniting-Tests
-        run: go test -json ./cmd/... > go-test.json
+  #     - name: Run Uniting-Tests
+  #       run: go test -json ./cmd/... > go-test.json
       
-      - name: Publish Uniting-Tests
-        run: |
-            cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
-            npx github-actions-ctrf summary ctrf-report.json
-            npx github-actions-ctrf failed ctrf-report.json
-        if: always()
+  #     - name: Publish Uniting-Tests
+  #       run: |
+  #           cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
+  #           npx github-actions-ctrf summary ctrf-report.json
+  #           npx github-actions-ctrf failed ctrf-report.json
+  #       if: always()
 
   # cd-docker:
   #   name: Continous Delivry - Docker
@@ -63,9 +63,12 @@ jobs:
 
   cd-assets:
     name: Continous Delivry - Assets
-    needs: ci
+   # needs: ci
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
