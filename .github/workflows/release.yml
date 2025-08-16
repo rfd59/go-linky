@@ -1,19 +1,16 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-name: Build
+name: Release
 
 on:
   push:
-    branches-ignore: 
-      - main
-      - feature/quality
-  pull_request:
-  workflow_dispatch: 
+    tags:
+      - '*'
 
 jobs:
 
-  ci:
-    name: Continous Integration
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,26 +24,17 @@ jobs:
       - name: Install dependencies
         run: |
           go mod download
-          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
 
       - name: Build
         run: go build ./...
 
       - name: Run Uniting-Tests
-        run: go test -json ./cmd/... > go-test.json
-      
-      - name: Publish Uniting-Tests
-        run: |
-            cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
-            npx github-actions-ctrf summary ctrf-report.json
-            npx github-actions-ctrf failed ctrf-report.json
-        if: always()
+        run: go test ./cmd/...
 
 
   cd-docker:
-    name: Continous Delivry - Docker
-    needs: ci
-    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    name: Docker
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -66,13 +54,12 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ vars.IMAGE_NAME}}:snapshot
+          tags: ${{ vars.IMAGE_NAME}}:${{ github.ref_name }}, ${{ vars.IMAGE_NAME}}:latest
 
-          
+
   cd-assets:
-    name: Continous Delivry - Assets
-    needs: ci
-    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    name: Assets
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -81,14 +68,41 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
-          args: release --clean --snapshot
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload assets
-        uses: actions/upload-artifact@v4
+          
+  report:
+    name: Codecov
+    needs: [cd-docker, cd-assets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+    
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          name: go-linky
-          path: |
-            dist/*.tar.gz
-            dist/*.zip
+          go-version: ${{ vars.GO_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          go mod download
+          go install github.com/jstemmer/go-junit-report/v2@latest
+ 
+      - name: Run tests
+        run: |
+          go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rfd59/go-linky

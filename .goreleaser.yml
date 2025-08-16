@@ -32,15 +32,27 @@ archives:
         formats: [zip]
 
 changelog:
+  #disable: true
+  use: github
   sort: asc
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: "Bug fixes"
+      regexp: '^.*?bug(\([[:word:]]+\))??!?:.+$'
+      order: 1
+    - title: Others
+      order: 999
   filters:
     exclude:
       - "^docs:"
       - "^test:"
+      - "^skip:"
 
 release:
   footer: >-
 
     ---
 
-    Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+    📦 A **Docker image** is also available into _Docker Hub_ repository [rfd59/go-linky](https://hub.docker.com/r/rfd59/go-linky/tags).
