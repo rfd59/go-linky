@@ -1,4 +1,13 @@
- # Go-Linky  
+ # Go-Linky
+
+![GitHub Release](https://img.shields.io/github/v/release/rfd59/go-linky)
+![GitHub Issues](https://img.shields.io/github/issues/rfd59/go-linky)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/rfd59/go-linky)
+![GitHub License](https://img.shields.io/github/license/rfd59/go-linky)
+
+![Go version](https://img.shields.io/github/go-mod/go-version/rfd59/go-linky)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/rfd59/go-linky/.github%2Fworkflows%2Fci.yml)
+[![Coverage](https://codecov.io/gh/rfd59/go-linky/graph/badge.svg?token=SL969PMZ04)](https://codecov.io/gh/rfd59/go-linky)
 
 **Go-Linky** is a lightweight Go application that collects real-time telemetry from the French **Linky smart meter** through its serial interface (TIC port). It parses the meter data and publishes it to an **MQTT broker**, making it easy to integrate electricity consumption and production metrics into your home automation setup.  
 

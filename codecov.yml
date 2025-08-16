@@ -1,0 +1,3 @@
+coverage:
+  ignore:
+    - "cmd/go-linky/main.go"
