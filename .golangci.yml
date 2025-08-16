@@ -28,6 +28,7 @@ linters:
       - path:  cmd/go-linky/core/linky/linky.go
         linters:
           - cyclop
+          - funlen
 
 formatters:
   enable:
