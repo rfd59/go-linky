@@ -1,26 +1,9 @@
 version: "2"
 
 linters:
-  default: none
-  enable:
-    - errcheck
-    - govet
-    - ineffassign
-    - staticcheck
-    - unused
-    - gocyclo
-    - dupl
-    - misspell
-    - gosec
-    - ineffassign
-    - makezero
-    - misspell
-    - nilerr
-    - predeclared
-    - unconvert
-    - testifylint
-    - durationcheck
-    - copyloopvar
+  default: all
+  disable:
+    - depguard
   settings:
     errcheck:
       exclude-functions:
