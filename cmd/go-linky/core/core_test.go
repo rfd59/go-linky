@@ -27,7 +27,7 @@ func TestCore_Run_OpenPortFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Failed to open the serial port \"COM1\": no such file or directory")
+	assert.EqualError(err, "failed to open the serial port \"COM1\": no such file or directory")
 }
 
 func TestCore_Run_ReadPortFailed(t *testing.T) {
@@ -43,7 +43,7 @@ func TestCore_Run_ReadPortFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Port is unavailable to read from: multiple Read calls return no data or error")
+	assert.EqualError(err, "port is unavailable to read from: multiple Read calls return no data or error")
 }
 
 func TestCore_Run_FrameLoop(t *testing.T) {

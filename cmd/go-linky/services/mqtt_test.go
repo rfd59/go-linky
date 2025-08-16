@@ -23,7 +23,7 @@ func TestMqtt_Publish_ConnectionFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Failed to etablish a connection to MQTT: no servers defined to connect to")
+	assert.EqualError(err, "failed to etablish a connection to MQTT: no servers defined to connect to")
 }
 
 func TestMqtt_Publish_MessageFailed(t *testing.T) {
@@ -41,7 +41,7 @@ func TestMqtt_Publish_MessageFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Message can't be build: null value")
+	assert.EqualError(err, "message can't be build: null value")
 }
 
 func TestMqtt_Publish_Failed(t *testing.T) {
@@ -60,7 +60,7 @@ func TestMqtt_Publish_Failed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Failed to publish the message to MQTT: mock error...")
+	assert.EqualError(err, "failed to publish the message to MQTT: mock error...")
 }
 
 func TestMqtt_Publish_Success(t *testing.T) {
