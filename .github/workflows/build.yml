@@ -44,8 +44,9 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rfd59/go-linky
+          
   cd-docker:
-    name: Docker
+    name: Continous Delivry - Docker
     needs: ci
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +54,7 @@ jobs:
         run: echo Docker
 
   cd-artifacts:
-    name: Artifacts
+    name: Continous Delivry - Artifacts
     needs: ci
     runs-on: ubuntu-latest
     steps:
