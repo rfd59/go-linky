@@ -45,31 +45,41 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rfd59/go-linky
 
-  cd-docker:
-    name: Continous Delivry - Docker
-    needs: ci
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  # cd-docker:
+  #   name: Continous Delivry - Docker
+  #   needs: ci
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
 
-      - name: Log into registry
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
+  #     - name: Log into registry
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKERHUB_USER }}
+  #         password: ${{ secrets.DOCKERHUB_PASS }}
      
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: rfd59/go-linky:snapshot
+  #     - name: Build and push
+  #       uses: docker/build-push-action@v6
+  #       with:
+  #         platforms: linux/amd64,linux/arm64
+  #         push: true
+  #         tags: rfd59/go-linky:snapshot
 
-  cd-artifacts:
-    name: Continous Delivry - Artifacts
+  cd-assets:
+    name: Continous Delivry - Assets
     needs: ci
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: echo Artifact
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          args: release --clean --snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-linky
+          path: dist/*
