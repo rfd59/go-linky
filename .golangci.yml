@@ -12,6 +12,15 @@ linters:
     - dupl
     - misspell
     - gosec
+    - ineffassign
+    - makezero
+    - misspell
+    - nilerr
+    - predeclared
+    - unconvert
+    - testifylint
+    - durationcheck
+    - copyloopvar
   settings:
     errcheck:
       exclude-functions:
