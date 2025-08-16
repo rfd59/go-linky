@@ -17,6 +17,10 @@ linters:
       exclude-functions:
         - (go.bug.st/serial.Port).Close
 
+formatters:
+  enable:
+    - goimports
+
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
