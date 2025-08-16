@@ -1,4 +1,4 @@
-name: 'Main PR'
+name: 'Check PR'
 
 on:
   pull_request:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   check_branch:
+    name: Check PR
     runs-on: ubuntu-latest
     steps:
       - name: Check origin branch

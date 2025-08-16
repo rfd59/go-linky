@@ -1,4 +1,4 @@
-name: Quality Code
+name: Code Quality
 
 on:
   push:
@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   coverage:
+    name: Coverage Quality
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -44,6 +45,7 @@ jobs:
           slug: rfd59/go-linky
 
   golangci-lint:
+    name: Source Quality
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
