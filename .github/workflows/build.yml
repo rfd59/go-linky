@@ -25,35 +25,20 @@ jobs:
         run: |
           go mod download
           go install github.com/jstemmer/go-junit-report/v2@latest
+          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
 
       - name: Build
-        run: go build -v ./...
+        run: go build ./...
 
       - name: Run Uniting-Tests
-        run: |
-          go test -v ./cmd/...
+        run: go test -json ./cmd/... > go-test.json
       
       - name: Publish Uniting-Tests
         run: |
-          npx github-actions-ctrf summary ctrf-report.json
-          npx github-actions-ctrf failed ctrf-report.json
+            cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
+            npx github-actions-ctrf summary ctrf-report.json
+            npx github-actions-ctrf failed ctrf-report.json
         if: always()
-
-      # - name: Run tests
-      #   run: |
-      #     go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
-
-      # - name: Upload test results to Codecov
-      #   if: ${{ !cancelled() }}
-      #   uses: codecov/test-results-action@v1
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-
-      # - name: Upload coverage reports to Codecov
-      #   uses: codecov/codecov-action@v5
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     slug: rfd59/go-linky
 
   # cd-docker:
   #   name: Continous Delivry - Docker
