@@ -32,15 +32,17 @@ archives:
         formats: [zip]
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+  skip: true
 
 release:
   footer: >-
-
+    ## Changelog
+    #### Features
+    - ...
+    #### Bug fixes
+    - ...
+    #### Others
+    - ...
     ---
 
-    Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+    📦 Docker image is also available into _Docker Hub_ repository [rfd59/go-linky](https://hub.docker.com/r/rfd59/go-linky/tags).
