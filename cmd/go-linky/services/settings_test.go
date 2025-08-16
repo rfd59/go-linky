@@ -38,15 +38,15 @@ func TestSettings_NewSettingsService_EnvVar(t *testing.T) {
 	mSerialService := mock_test.InitMockSerialService(nil)
 
 	// Set Environments variables
-	os.Setenv("GOLINKY_LINKY_SERIAL_PORT", "COM99")
-	os.Setenv("GOLINKY_LINKY_MODE", "STANDARD")
-	os.Setenv("GOLINKY_LINKY_FREQUENCY", "300")
-	os.Setenv("GOLINKY_MQTT_PROTOCOL", "tcps")
-	os.Setenv("GOLINKY_MQTT_HOST", "mqtt.domain.local")
-	os.Setenv("GOLINKY_MQTT_PORT", "1884")
-	os.Setenv("GOLINKY_MQTT_USERNAME", "mqtt")
-	os.Setenv("GOLINKY_MQTT_PASSWORD", "secret")
-	os.Setenv("GOLINKY_MQTT_TOPIC", "my/topic")
+	_ = os.Setenv("GOLINKY_LINKY_SERIAL_PORT", "COM99")
+	_ = os.Setenv("GOLINKY_LINKY_MODE", "STANDARD")
+	_ = os.Setenv("GOLINKY_LINKY_FREQUENCY", "300")
+	_ = os.Setenv("GOLINKY_MQTT_PROTOCOL", "tcps")
+	_ = os.Setenv("GOLINKY_MQTT_HOST", "mqtt.domain.local")
+	_ = os.Setenv("GOLINKY_MQTT_PORT", "1884")
+	_ = os.Setenv("GOLINKY_MQTT_USERNAME", "mqtt")
+	_ = os.Setenv("GOLINKY_MQTT_PASSWORD", "secret")
+	_ = os.Setenv("GOLINKY_MQTT_TOPIC", "my/topic")
 
 	// Test the NewSettingsService function
 	service, err := services.NewSettingsService(mSerialService)
