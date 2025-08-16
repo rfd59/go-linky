@@ -80,4 +80,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: go-linky
-          path: dist/*
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
