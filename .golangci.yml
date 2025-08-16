@@ -4,7 +4,7 @@ linters:
   settings:
     errcheck:
       exclude-functions:
-        - serial.Port.Close
+        - serial.Port
 
 # formatters:
 #   enable:
