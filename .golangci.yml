@@ -1,14 +1,11 @@
 version: "2"
 
-linters:    
+linters:
+  default: all
   settings:
     errcheck:
       exclude-functions:
         - (go.bug.st/serial.Port).Close
-
-# formatters:
-#   enable:
-#     - errcheck
 
 issues:
   max-issues-per-linter: 0
