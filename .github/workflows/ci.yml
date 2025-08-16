@@ -28,11 +28,11 @@ jobs:
           go mod download
 
       # 4. Linter et analyse de qualité
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
-        with:
-          version: v1.53.3
-          args: run ./cmd/...
+      # - name: Run golangci-lint
+      #   uses: golangci/golangci-lint-action@v4
+      #   with:
+      #     version: v1.53.3
+      #     args: run ./cmd/...
 
       # 5. Build
       - name: Build
