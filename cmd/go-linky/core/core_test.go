@@ -1,7 +1,6 @@
 package core_test
 
 import (
-	"errors"
 	"log/slog"
 	"rfd59/go-linky/cmd/go-linky/core"
 	"rfd59/go-linky/cmd/go-linky/models"
@@ -69,7 +68,7 @@ func TestCore_Run_ProcessingTicFailed(t *testing.T) {
 	// Test the GetPortsList function
 	settings := &models.Settings{}
 	port := mock_test.InitMockSerialPort_Read([]byte{2, 10, 72, 72, 80, 72, 67, 32, 65, 32, 44, 13, 3}, nil)
-	linky := mock_test.InitMockLinkyService(mock_test.LinkyService_OpenPort{Port: port}, mock_test.LinkyService_ReadTiC{TiC: models.TiC{}, Err: errors.New("mock error...")})
+	linky := mock_test.InitMockLinkyService(mock_test.LinkyService_OpenPort{Port: port}, mock_test.LinkyService_ReadTiC{TiC: models.TiC{}, Err: mock_test.MockError})
 	mqtt := &services.MqttService{}
 
 	err := core.Run(settings, linky, mqtt)
@@ -91,7 +90,7 @@ func TestCore_Run_ProcessingPublishFailed(t *testing.T) {
 	settings := &models.Settings{Linky: models.LinkySettings{Mode: models.StandardMode}}
 	port := mock_test.InitMockSerialPort_Read([]byte{2, 10, 72, 72, 80, 72, 67, 32, 65, 32, 44, 13, 3}, nil)
 	linky := mock_test.InitMockLinkyService(mock_test.LinkyService_OpenPort{Port: port}, mock_test.LinkyService_ReadTiC{TiC: models.TiC{}})
-	mqtt := mock_test.InitMockMqttService("my/topic", errors.New("mock error..."))
+	mqtt := mock_test.InitMockMqttService("my/topic", mock_test.MockError)
 
 	err := core.Run(settings, linky, mqtt)
 

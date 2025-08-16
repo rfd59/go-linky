@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"errors"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -46,7 +45,7 @@ func TestMqtt_Publish_Failed(t *testing.T) {
 	require := require.New(t)
 
 	// Mock
-	mToken := mock_test.InitMockMqttToken(true, errors.New("mock error..."))
+	mToken := mock_test.InitMockMqttToken(true, mock_test.MockError)
 	mClient := mock_test.InitMockMqttClient_Publish(mToken)
 
 	// Test the GetSerialPort function

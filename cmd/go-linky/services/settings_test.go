@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"errors"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -62,7 +61,7 @@ func TestSettings_NewSettingsService_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialService
-	mSerialService := mock_test.InitMockSerialService(errors.New("mock error..."))
+	mSerialService := mock_test.InitMockSerialService(mock_test.MockError)
 
 	// Test the NewSettingsService function
 	service, err := services.NewSettingsService(mSerialService)

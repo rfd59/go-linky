@@ -25,7 +25,7 @@ linters:
     paths:
       - test/cmd/linky-tic/
     rules:
-      - path:  cmd/go-linky/core/linky/linky.go
+      - path: cmd/go-linky/core/linky/linky.go
         linters:
           - cyclop
           - funlen

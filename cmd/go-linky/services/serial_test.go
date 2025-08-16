@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"errors"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -60,7 +59,7 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialInfra
-	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: errors.New("mock error...")})
+	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: mock_test.MockError})
 
 	// Test the GetSerialPort function
 	settings := &models.Serial{Port: "", Mode: nil}

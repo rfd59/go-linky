@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"errors"
 	"fmt"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
@@ -101,7 +100,7 @@ func TestLinky_OpenPort_Error(t *testing.T) {
 	// Mock the SerialInfra
 	mInfra := mock_test.InitMockSerialInfra_Open(map[string]mock_test.SerialInfra_Open{"COM1": {
 		Port:  nil,
-		Error: errors.New("mock error..."),
+		Error: mock_test.MockError,
 	}})
 
 	// Test the OpenSerialPort function
