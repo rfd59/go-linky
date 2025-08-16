@@ -1,11 +1,11 @@
 package services
 
 import (
-	"errors"
 	"fmt"
 	"log/slog"
 	"rfd59/go-linky/cmd/go-linky/infra"
 	"rfd59/go-linky/cmd/go-linky/models"
+	"rfd59/go-linky/cmd/go-linky/utils"
 )
 
 type ISerialService interface {
@@ -23,7 +23,7 @@ func (s *SerialService) DiscoverPort(settings *models.Serial, serial infra.ISeri
 		}
 		// Check if any ports were found
 		if len(ports) == 0 {
-			return errors.New("no serial ports found")
+			return utils.ErrNoSerialPort
 		} else if len(ports) > 1 {
 			slog.Warn("Multiple serial ports found, using the first one.")
 		}

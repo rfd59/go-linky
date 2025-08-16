@@ -75,7 +75,7 @@ func TestCore_Run_ProcessingTicFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.NoError(err)
-	log.AssertPrecise(slogassert.LogMessageMatch{Message: "The TIC can't be read! [mock error...]", Level: slog.LevelError})
+	log.AssertPrecise(slogassert.LogMessageMatch{Message: "The TIC can't be read! [mock error: xxx]", Level: slog.LevelError})
 }
 
 func TestCore_Run_ProcessingPublishFailed(t *testing.T) {
@@ -96,5 +96,5 @@ func TestCore_Run_ProcessingPublishFailed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.NoError(err)
-	log.AssertPrecise(slogassert.LogMessageMatch{Message: "The TIC can't be published! [mock error...]", Level: slog.LevelError})
+	log.AssertPrecise(slogassert.LogMessageMatch{Message: "The TIC can't be published! [mock error: xxx]", Level: slog.LevelError})
 }

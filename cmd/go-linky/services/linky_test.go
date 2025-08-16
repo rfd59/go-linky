@@ -111,6 +111,6 @@ func TestLinky_OpenPort_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected error when opening the serial port")
-	require.EqualError(err, fmt.Sprintf("failed to open the serial port %q: %s", "COM1", "mock error..."), "Expected specific error message when opening the serial port fails")
+	require.EqualError(err, fmt.Sprintf("failed to open the serial port %q: %s", "COM1", "mock error: xxx"), "Expected specific error message when opening the serial port fails")
 	assert.Nil(port, "Expected no port to be returned when opening the serial port fails")
 }

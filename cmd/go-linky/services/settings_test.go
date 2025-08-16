@@ -68,6 +68,6 @@ func TestSettings_NewSettingsService_Error(t *testing.T) {
 
 	/// Assert the expected behavior
 	require.Error(err)
-	require.EqualError(err, "discover serial port failed: mock error...")
+	require.EqualError(err, "discover serial port failed: mock error: xxx")
 	assert.Nil(service)
 }

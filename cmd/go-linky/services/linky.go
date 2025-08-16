@@ -1,11 +1,11 @@
 package services
 
 import (
-	"errors"
 	"fmt"
 	"rfd59/go-linky/cmd/go-linky/core/linky"
 	"rfd59/go-linky/cmd/go-linky/infra"
 	"rfd59/go-linky/cmd/go-linky/models"
+	"rfd59/go-linky/cmd/go-linky/utils"
 
 	"go.bug.st/serial"
 )
@@ -25,7 +25,7 @@ func (s *LinkyService) ReadTic(frame []byte, mode linky.ILinkyMode) (*models.TiC
 
 	ds := mode.LoadDatasets(string(frame[1 : len(frame)-1])) // Exclude STX and ETX characters
 	if len(ds) == 0 {
-		return nil, errors.New("no datasets found in the frame")
+		return nil, utils.ErrNoDatasets
 	}
 
 	return mode.LoadTiC(ds), nil
@@ -33,13 +33,13 @@ func (s *LinkyService) ReadTic(frame []byte, mode linky.ILinkyMode) (*models.TiC
 
 func isValid(frame []byte) (bool, error) {
 	if len(frame) == 0 {
-		return false, errors.New("frame is empty")
+		return false, utils.ErrEmptyFrame
 	}
 	if frame[0] != 0x02 {
-		return false, errors.New("frame does not start with STX (0x02) character")
+		return false, utils.ErrSTXFrame
 	}
 	if frame[len(frame)-1] != 0x03 {
-		return false, errors.New("frame does not end with ETX (0x03) character")
+		return false, utils.ErrETXFrame
 	}
 	return true, nil
 }

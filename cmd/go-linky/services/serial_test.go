@@ -69,6 +69,6 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected an error when no ports are available")
-	require.EqualError(err, "failed to get the port list: mock error...", "Expected specific error message when GetPortsList fails")
+	require.EqualError(err, "failed to get the port list: mock error: xxx", "Expected specific error message when GetPortsList fails")
 	assert.Empty(settings.Port, "Expected no port to be returned when no ports are available")
 }

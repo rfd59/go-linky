@@ -56,7 +56,7 @@ func TestMqtt_Publish_Failed(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err)
-	require.EqualError(err, "failed to publish the message to MQTT: mock error...")
+	require.EqualError(err, "failed to publish the message to MQTT: mock error: xxx")
 }
 
 func TestMqtt_Publish_Success(t *testing.T) {
