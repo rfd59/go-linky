@@ -25,7 +25,7 @@ func (s *LinkyService) ReadTic(frame []byte, mode linky.ILinkyMode) (*models.TiC
 
 	ds := mode.LoadDatasets(string(frame[1 : len(frame)-1])) // Exclude STX and ETX characters
 	if len(ds) == 0 {
-		return nil, errors.New("No datasets found in the frame")
+		return nil, errors.New("no datasets found in the frame")
 	}
 
 	return mode.LoadTiC(ds), nil
@@ -33,13 +33,13 @@ func (s *LinkyService) ReadTic(frame []byte, mode linky.ILinkyMode) (*models.TiC
 
 func isValid(frame []byte) (bool, error) {
 	if len(frame) == 0 {
-		return false, errors.New("Frame is empty")
+		return false, errors.New("frame is empty")
 	}
 	if frame[0] != 0x02 {
-		return false, errors.New("Frame does not start with STX (0x02) character")
+		return false, errors.New("frame does not start with STX (0x02) character")
 	}
 	if frame[len(frame)-1] != 0x03 {
-		return false, errors.New("Frame does not end with ETX (0x03) character")
+		return false, errors.New("frame does not end with ETX (0x03) character")
 	}
 	return true, nil
 }
@@ -48,7 +48,7 @@ func (s *LinkyService) OpenPort(settings *models.Serial, serial infra.ISerialInf
 	// Open the serial port with the specified mode
 	port, err := serial.Open(settings.Port, settings.Mode)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to open the serial port %q: %w", settings.Port, err)
+		return nil, fmt.Errorf("failed to open the serial port %q: %w", settings.Port, err)
 	}
 
 	return port, nil
