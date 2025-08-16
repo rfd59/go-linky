@@ -1,6 +1,4 @@
-# formatters:
-#   enable:
-#     - errcheck
+version: "2"
 
 linters:    
   settings:
@@ -8,6 +6,10 @@ linters:
       exclude-functions:
         - (serial.Port).Close
 
-# issues:
-#   max-issues-per-linter: 0
-#   max-same-issues: 0
+formatters:
+  enable:
+    - errcheck
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
