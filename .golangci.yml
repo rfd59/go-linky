@@ -1,6 +1,22 @@
 version: "2"
 
 linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - golint
+    - gocyclo
+    - dupl
+    - structcheck
+    - interfacer
+    - misspell
+    - goimports
+    - depguard
+    - gosec
   settings:
     errcheck:
       exclude-functions:
