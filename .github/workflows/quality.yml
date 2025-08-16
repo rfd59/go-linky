@@ -2,7 +2,9 @@ name: Code Quality
 
 on:
   push:
-    branches: [develop feature/quality]
+    branches: 
+      - develop
+      - feature/quality
   pull_request:
   workflow_dispatch:
 
