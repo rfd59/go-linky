@@ -29,21 +29,31 @@ jobs:
       - name: Build
         run: go build -v ./...
 
-      - name: Run tests
+      - name: Run Uniting-Tests
         run: |
-          go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
+          go test -v ./cmd/...
+      
+      - name: Publish Uniting-Tests
+        run: |
+          npx github-actions-ctrf summary ctrf-report.json
+          npx github-actions-ctrf failed ctrf-report.json
+        if: always()
 
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Run tests
+      #   run: |
+      #     go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: rfd59/go-linky
+      # - name: Upload test results to Codecov
+      #   if: ${{ !cancelled() }}
+      #   uses: codecov/test-results-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     slug: rfd59/go-linky
 
   # cd-docker:
   #   name: Continous Delivry - Docker
