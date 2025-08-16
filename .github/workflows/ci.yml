@@ -41,12 +41,19 @@ jobs:
       # 6. Test unitaires avec couverture
       - name: Run tests
         run: |
-          go test -v -coverprofile=coverage.out ./cmd/...
+          go install github.com/jstemmer/go-junit-report/v2@latest
+          go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
       
       # 7. Afficher le rapport de couverture
       - name: Show coverage
         run: |
           go tool cover -func=coverage.out
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       # 8. Optionnel: publier la couverture sur Codecov
       - name: Upload coverage reports to Codecov
