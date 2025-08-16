@@ -43,21 +43,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rfd59/go-linky
-
-
-  golangci-lint:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v8
-        continue-on-error: true
-        with:
-          version: latest
-          
-      - name: Run tests
-        run: |
-          echo tests
