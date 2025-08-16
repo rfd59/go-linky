@@ -28,12 +28,13 @@ func Run(settings *models.Settings, linkyService services.ILinkyService, mqttSer
 		// Read until "End TeXt" ETX (0x03) character
 		frame, err := reader.ReadBytes(0x03)
 		if err != nil {
-			return fmt.Errorf("Port is unavailable to read from: %w", err)
+			return fmt.Errorf("port is unavailable to read from: %w", err)
 		}
 
 		// Check if the frame starts with "Start TeXt" STX (0x02) character to have a full frame
 		if frame[0] == 0x02 {
-			return processing(frame, settings, linkyService, mqttService)
+			processing(frame, settings, linkyService, mqttService)
+			return nil
 		} else {
 			// frame is incomplet. The next will be OK
 			loop++
@@ -44,7 +45,7 @@ func Run(settings *models.Settings, linkyService services.ILinkyService, mqttSer
 	return nil
 }
 
-func processing(frame []byte, settings *models.Settings, linkyService services.ILinkyService, mqttService services.IMqttService) error {
+func processing(frame []byte, settings *models.Settings, linkyService services.ILinkyService, mqttService services.IMqttService) {
 	var mode linky.ILinkyMode
 
 	slog.Debug("Processing the frame...")
@@ -69,5 +70,4 @@ func processing(frame []byte, settings *models.Settings, linkyService services.I
 	}
 
 	slog.Debug("The TIC has been published.")
-	return nil
 }

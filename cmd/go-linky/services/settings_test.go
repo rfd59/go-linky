@@ -1,8 +1,6 @@
 package services_test
 
 import (
-	"errors"
-	"os"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -38,15 +36,15 @@ func TestSettings_NewSettingsService_EnvVar(t *testing.T) {
 	mSerialService := mock_test.InitMockSerialService(nil)
 
 	// Set Environments variables
-	os.Setenv("GOLINKY_LINKY_SERIAL_PORT", "COM99")
-	os.Setenv("GOLINKY_LINKY_MODE", "STANDARD")
-	os.Setenv("GOLINKY_LINKY_FREQUENCY", "300")
-	os.Setenv("GOLINKY_MQTT_PROTOCOL", "tcps")
-	os.Setenv("GOLINKY_MQTT_HOST", "mqtt.domain.local")
-	os.Setenv("GOLINKY_MQTT_PORT", "1884")
-	os.Setenv("GOLINKY_MQTT_USERNAME", "mqtt")
-	os.Setenv("GOLINKY_MQTT_PASSWORD", "secret")
-	os.Setenv("GOLINKY_MQTT_TOPIC", "my/topic")
+	t.Setenv("GOLINKY_LINKY_SERIAL_PORT", "COM99")
+	t.Setenv("GOLINKY_LINKY_MODE", "STANDARD")
+	t.Setenv("GOLINKY_LINKY_FREQUENCY", "300")
+	t.Setenv("GOLINKY_MQTT_PROTOCOL", "tcps")
+	t.Setenv("GOLINKY_MQTT_HOST", "mqtt.domain.local")
+	t.Setenv("GOLINKY_MQTT_PORT", "1884")
+	t.Setenv("GOLINKY_MQTT_USERNAME", "mqtt")
+	t.Setenv("GOLINKY_MQTT_PASSWORD", "secret")
+	t.Setenv("GOLINKY_MQTT_TOPIC", "my/topic")
 
 	// Test the NewSettingsService function
 	service, err := services.NewSettingsService(mSerialService)
@@ -63,13 +61,13 @@ func TestSettings_NewSettingsService_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialService
-	mSerialService := mock_test.InitMockSerialService(errors.New("mock error..."))
+	mSerialService := mock_test.InitMockSerialService(mock_test.ErrMockor)
 
 	// Test the NewSettingsService function
 	service, err := services.NewSettingsService(mSerialService)
 
 	/// Assert the expected behavior
 	require.Error(err)
-	assert.EqualError(err, "Discover serial port failed: mock error...")
+	require.EqualError(err, "discover serial port failed: mock error: xxx")
 	assert.Nil(service)
 }

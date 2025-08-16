@@ -1,9 +1,9 @@
 package linky
 
 import (
-	"fmt"
 	"log/slog"
 	"rfd59/go-linky/cmd/go-linky/models"
+	"rfd59/go-linky/cmd/go-linky/utils"
 	"strings"
 )
 
@@ -59,10 +59,10 @@ func (h *Historic) loadDataset(dataset string) (ld models.LinkyDataset, err erro
 		if len(items[2]) == 1 {
 			ld.Checksum = items[2][0]
 		} else {
-			err = fmt.Errorf("Invalid checksum length: %s", items[2])
+			err = utils.ErrInvalidChecksum
 		}
 	} else {
-		err = fmt.Errorf("Invalid dataset format: %s", dataset)
+		err = utils.ErrInvalidDataset
 	}
 
 	return ld, err

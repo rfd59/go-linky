@@ -15,7 +15,7 @@ import (
 // It listens for user input to exit the loop gracefully.
 // To run this program, you need to have a virtual serial port set up.
 // You can use `socat` to create virtual serial ports:
-// `socat -dd pty,rawer,echo=0,link=/tmp/ttyV0 pty,rawer,echo=0,link=/tmp/ttyV1`
+// `socat -dd pty,rawer,echo=0,link=/tmp/ttyV0 pty,rawer,echo=0,link=/tmp/ttyV1`.
 func main() {
 	device := "/tmp/ttyV0"
 	datasets := []string{
@@ -47,7 +47,6 @@ func main() {
 	port, err := serial.Open(device, mode)
 	if err != nil {
 		log.Fatalf("Failed to open the serial port %q [%s]\n=> Launch `socat -dd pty,rawer,echo=0,link=/tmp/ttyV0 pty,rawer,echo=0,link=/tmp/ttyV1` to create the virtual serial ports.", device, err)
-
 	}
 	defer port.Close()
 
@@ -96,5 +95,4 @@ func main() {
 			i++
 		}
 	}
-
 }

@@ -1,8 +1,6 @@
 package services_test
 
 import (
-	"errors"
-	"fmt"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -21,7 +19,6 @@ func TestSerial_DiscoverPort_Ports(t *testing.T) {
 		"multiple": {"/dev/serial0", "/dev/serial1"},
 	} {
 		t.Run(id, func(t *testing.T) {
-
 			// Mock the SerialInfra
 			mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: testCase, Error: nil})
 
@@ -53,7 +50,7 @@ func TestSerial_GetSerialPort_Empty(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected an error when no ports are available")
-	assert.EqualError(err, "No serial ports found", "Expected specific error message when no ports are available")
+	require.EqualError(err, "no serial ports found", "Expected specific error message when no ports are available")
 	assert.Empty(settings.Port, "Expected no port to be returned when no ports are available")
 }
 
@@ -62,7 +59,7 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialInfra
-	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: errors.New("mock error...")})
+	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: mock_test.ErrMockor})
 
 	// Test the GetSerialPort function
 	settings := &models.Serial{Port: "", Mode: nil}
@@ -72,6 +69,6 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected an error when no ports are available")
-	assert.EqualError(err, fmt.Sprintf("Failed to get the port list: %s", "mock error..."), "Expected specific error message when GetPortsList fails")
+	require.EqualError(err, "failed to get the port list: mock error: xxx", "Expected specific error message when GetPortsList fails")
 	assert.Empty(settings.Port, "Expected no port to be returned when no ports are available")
 }

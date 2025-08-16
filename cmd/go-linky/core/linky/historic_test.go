@@ -26,7 +26,6 @@ func TestHistoric_LoadDatasets_Valid(t *testing.T) {
 	assert.Equal("OPTARIF", data[1].Label, "Second dataset label should be 'OPTARIF'")
 	assert.Equal("BBR(", data[1].Data, "Second dataset data should be 'BBR('")
 	assert.Equal(byte('S'), data[1].Checksum, "Second dataset checksum should be 'S'")
-
 }
 
 func TestHistoric_LoadDatasets_Invalid(t *testing.T) {
@@ -38,8 +37,7 @@ func TestHistoric_LoadDatasets_Invalid(t *testing.T) {
 	data := my.LoadDatasets("\nADCO811775653238 O\r\nADCO 81177 5653238 O\r\nOPTARIF BBR( fS\r")
 
 	// Assert the expected behavior
-	assert.Len(data, 0, "Expected no datasets to be loaded due to invalid format")
-
+	assert.Empty(data, "Expected no datasets to be loaded due to invalid format")
 }
 
 func TestHistoric_LoadTIC_Valid(t *testing.T) {
@@ -53,7 +51,7 @@ func TestHistoric_LoadTIC_Valid(t *testing.T) {
 
 	// Assert the expected behavior
 	assert.Equal("811775653238", tic.ADCO)
-	assert.Equal("", tic.OPTARIF)
+	assert.Empty(tic.OPTARIF)
 	assert.Equal(uint8(0), tic.ISOUSC)
 	assert.Equal(uint32(0), tic.BASE)
 	assert.Equal(uint32(0), tic.HCHC)
@@ -67,14 +65,14 @@ func TestHistoric_LoadTIC_Valid(t *testing.T) {
 	assert.Equal(uint32(0), tic.BBRHCJR)
 	assert.Equal(uint32(0), tic.BBRHPJR)
 	assert.Equal(uint8(0), tic.PEJP)
-	assert.Equal("", tic.PTEC)
-	assert.Equal("", tic.DEMAIN)
+	assert.Empty(tic.PTEC)
+	assert.Empty(tic.DEMAIN)
 	assert.Equal(uint8(0), tic.IINST)
 	assert.Equal(uint8(0), tic.ADPS)
 	assert.Equal(uint8(0), tic.IMAX)
 	assert.Equal(uint16(280), tic.PAPP)
-	assert.Equal("", tic.HHPHC)
-	assert.Equal("", tic.MOTDETAT)
+	assert.Empty(tic.HHPHC)
+	assert.Empty(tic.MOTDETAT)
 }
 
 func TestHistoric_LoadTIC_InvalidChecksum(t *testing.T) {
@@ -92,8 +90,8 @@ func TestHistoric_LoadTIC_InvalidChecksum(t *testing.T) {
 	tic := my.LoadTiC(ds)
 
 	// Assert the expected behavior
-	assert.Equal("", tic.ADCO)
-	assert.Equal("", tic.OPTARIF)
+	assert.Empty(tic.ADCO)
+	assert.Empty(tic.OPTARIF)
 	assert.Equal(uint8(0), tic.ISOUSC)
 	assert.Equal(uint32(0), tic.BASE)
 	assert.Equal(uint32(0), tic.HCHC)
@@ -107,13 +105,13 @@ func TestHistoric_LoadTIC_InvalidChecksum(t *testing.T) {
 	assert.Equal(uint32(0), tic.BBRHCJR)
 	assert.Equal(uint32(0), tic.BBRHPJR)
 	assert.Equal(uint8(0), tic.PEJP)
-	assert.Equal("", tic.PTEC)
-	assert.Equal("", tic.DEMAIN)
+	assert.Empty(tic.PTEC)
+	assert.Empty(tic.DEMAIN)
 	assert.Equal(uint8(0), tic.IINST)
 	assert.Equal(uint8(0), tic.ADPS)
 	assert.Equal(uint8(0), tic.IMAX)
 	assert.Equal(uint16(0), tic.PAPP)
-	assert.Equal("", tic.HHPHC)
-	assert.Equal("", tic.MOTDETAT)
+	assert.Empty(tic.HHPHC)
+	assert.Empty(tic.MOTDETAT)
 	log.AssertSomePrecise(slogassert.LogMessageMatch{Message: "Invalid checksum found for a dataset!", Level: slog.LevelError})
 }

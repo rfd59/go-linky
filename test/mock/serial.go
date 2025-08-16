@@ -102,8 +102,7 @@ func (m *SerialPortMock) Break(d time.Duration) error {
 // SerialServiceMock is a mock implementation of the services.ISerialService interface
 // used for testing purposes.
 type SerialServiceMock struct {
-	port serial.Port
-	err  error
+	err error
 }
 
 func InitMockSerialService(err error) (m *SerialServiceMock) {
