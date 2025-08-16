@@ -12,42 +12,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout du code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Installer Go
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.24'
 
-      # 3. Installer les dépendances
       - name: Install dependencies
         run: |
           go mod download
+          go install github.com/jstemmer/go-junit-report/v2@latest
 
-      # 4. Linter et analyse de qualité
       # - name: Run golangci-lint
       #   uses: golangci/golangci-lint-action@v4
       #   with:
       #     version: v1.53.3
       #     args: run ./cmd/...
 
-      # 5. Build
       - name: Build
         run: go build -v ./...
 
-      # 6. Test unitaires avec couverture
       - name: Run tests
         run: |
-          go install github.com/jstemmer/go-junit-report/v2@latest
           go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
-      
-      # 7. Afficher le rapport de couverture
-      - name: Show coverage
-        run: |
-          go tool cover -func=coverage.out
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
@@ -55,7 +44,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      # 8. Optionnel: publier la couverture sur Codecov
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
