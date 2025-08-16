@@ -26,7 +26,7 @@ func NewSettingsService(serialService ISerialService) (s *SettingsService, err e
 
 	s.loadSettings()
 	if err := serialService.DiscoverPort(&s.settings.Linky.Serial, &infra.SerialInfra{}); err != nil {
-		return nil, fmt.Errorf("Discover serial port failed: %w", err)
+		return nil, fmt.Errorf("discover serial port failed: %w", err)
 	}
 
 	return s, nil

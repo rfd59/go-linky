@@ -37,7 +37,7 @@ func (s *MqttService) Publish(tic *models.TiC, settings *models.MqttSettings, cl
 		slog.Debug("Not connected! Connecting...")
 		// Connection to MQTT broker
 		if token := cli.Connect(); token.Wait() && token.Error() != nil {
-			return fmt.Errorf("Failed to etablish a connection to MQTT: %w", token.Error())
+			return fmt.Errorf("failed to etablish a connection to MQTT: %w", token.Error())
 		}
 	}
 
@@ -47,12 +47,12 @@ func (s *MqttService) Publish(tic *models.TiC, settings *models.MqttSettings, cl
 		if err == nil {
 			err = errors.New("null value")
 		}
-		return fmt.Errorf("Message can't be build: %w", err)
+		return fmt.Errorf("message can't be build: %w", err)
 	}
 
 	// Publish
 	if token := cli.Publish(s.GetTopicName(settings.Topic, tic.ADCO), 0, false, string(msg)); token.Wait() && token.Error() != nil {
-		return fmt.Errorf("Failed to publish the message to MQTT: %w", token.Error())
+		return fmt.Errorf("failed to publish the message to MQTT: %w", token.Error())
 	}
 
 	return nil

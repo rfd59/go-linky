@@ -19,11 +19,11 @@ func (s *SerialService) DiscoverPort(settings *models.Serial, serial infra.ISeri
 		// Retrieve the port list
 		ports, err := serial.GetPortsList()
 		if err != nil {
-			return fmt.Errorf("Failed to get the port list: %w", err)
+			return fmt.Errorf("failed to get the port list: %w", err)
 		}
 		// Check if any ports were found
 		if len(ports) == 0 {
-			return errors.New("No serial ports found")
+			return errors.New("no serial ports found")
 		} else if len(ports) > 1 {
 			slog.Warn("Multiple serial ports found, using the first one.")
 		}
