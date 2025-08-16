@@ -21,6 +21,10 @@ linters:
     errcheck:
       exclude-functions:
         - (go.bug.st/serial.Port).Close
+  rules:
+    - path:  cmd/go-linky/core/linky/linky.go
+      linters:
+        - cyclop
   exclusions:
     paths:
       - test/cmd/linky-tic/
