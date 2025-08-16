@@ -2,7 +2,6 @@ package services_test
 
 import (
 	"errors"
-	"fmt"
 	"rfd59/go-linky/cmd/go-linky/models"
 	"rfd59/go-linky/cmd/go-linky/services"
 	mock_test "rfd59/go-linky/test/mock"
@@ -71,6 +70,6 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 
 	// Assert the expected behavior
 	require.Error(err, "Expected an error when no ports are available")
-	require.EqualError(err, fmt.Sprintf("failed to get the port list: %s", "mock error..."), "Expected specific error message when GetPortsList fails")
+	require.EqualError(err, "failed to get the port list: mock error...", "Expected specific error message when GetPortsList fails")
 	assert.Empty(settings.Port, "Expected no port to be returned when no ports are available")
 }

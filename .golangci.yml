@@ -21,6 +21,9 @@ linters:
     errcheck:
       exclude-functions:
         - (go.bug.st/serial.Port).Close
+  exclusions:
+    paths:
+      - test/cmd/linky-tic/
 
 formatters:
   enable:
