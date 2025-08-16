@@ -1,19 +1,16 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-name: Build
+name: Release
 
 on:
   push:
-    branches-ignore: 
-      - main
-      - feature/quality
-  pull_request:
-  workflow_dispatch: 
+    tags:
+      - '*'
 
 jobs:
 
-  ci:
-    name: Continous Integration
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,27 +24,21 @@ jobs:
       - name: Install dependencies
         run: |
           go mod download
-          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
 
       - name: Build
         run: go build ./...
 
       - name: Run Uniting-Tests
-        run: go test -json ./cmd/... > go-test.json
-      
-      - name: Publish Uniting-Tests
-        run: |
-            cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
-            npx github-actions-ctrf summary ctrf-report.json
-            npx github-actions-ctrf failed ctrf-report.json
-        if: always()
-        
+        run: go test ./cmd/...
+    
       - run: export
 
+      - run: echo ${{ github.ref_name }}
+
+
   cd-docker:
-    name: Continous Delivry - Docker
-    needs: ci
-    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    name: Docker
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -67,12 +58,12 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ vars.IMAGE_NAME}}:snapshot
+          tags: ${{ vars.IMAGE_NAME}}:${{ github.ref_name }}, ${{ vars.IMAGE_NAME}}:latest
+
 
   cd-assets:
-    name: Continous Delivry - Assets
-    needs: ci
-    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    name: Assets
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -81,14 +72,6 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
-          args: release --clean --snapshot
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: go-linky
-          path: |
-            dist/*.tar.gz
-            dist/*.zip
