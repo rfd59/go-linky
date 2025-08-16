@@ -32,7 +32,7 @@ archives:
         formats: [zip]
 
 changelog:
-  skip: true
+  disable: true
 
 release:
   footer: >-
