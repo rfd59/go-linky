@@ -4,6 +4,17 @@ linters:
   default: all
   disable:
     - depguard
+    - wsl_v5
+    - wsl
+    - wrapcheck
+    - varnamelen
+    - revive
+    - paralleltest
+    - noinlineerr
+    - nlreturn
+    - mnd
+    - lll
+    - exhaustruct
   settings:
     errcheck:
       exclude-functions:
