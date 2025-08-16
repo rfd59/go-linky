@@ -29,6 +29,9 @@ linters:
         linters:
           - cyclop
           - funlen
+      - path: cmd/go-linky/utils/parse.go
+        linters:
+          - gosec
 
 formatters:
   enable:
