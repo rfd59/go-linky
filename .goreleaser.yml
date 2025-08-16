@@ -23,7 +23,7 @@ builds:
     goarch:
       - amd64
       - arm64
-    dir: ./cmd/go-linky
+    # dir: ./cmd/go-linky
 
 archives:
   - formats: [tar.gz]
