@@ -62,4 +62,9 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           version: latest
+      - run: |
+          golangci-lint linters
+          golangci-lint version
+          golangci-lint config
+          
 
