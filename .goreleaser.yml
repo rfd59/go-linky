@@ -35,7 +35,6 @@ changelog:
   #disable: true
   use: github
   sort: asc
-  title: "Release Notes"
   groups:
     - title: Features
       regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
