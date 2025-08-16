@@ -6,9 +6,9 @@ linters:
       exclude-functions:
         - (serial.Port).Close
 
-formatters:
-  enable:
-    - errcheck
+# formatters:
+#   enable:
+#     - errcheck
 
 issues:
   max-issues-per-linter: 0
