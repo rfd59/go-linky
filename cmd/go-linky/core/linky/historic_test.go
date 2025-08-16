@@ -37,7 +37,7 @@ func TestHistoric_LoadDatasets_Invalid(t *testing.T) {
 	data := my.LoadDatasets("\nADCO811775653238 O\r\nADCO 81177 5653238 O\r\nOPTARIF BBR( fS\r")
 
 	// Assert the expected behavior
-	assert.Len(data, 0, "Expected no datasets to be loaded due to invalid format")
+	assert.Empty(data, "Expected no datasets to be loaded due to invalid format")
 }
 
 func TestHistoric_LoadTIC_Valid(t *testing.T) {

@@ -21,7 +21,6 @@ func TestSerial_DiscoverPort_Ports(t *testing.T) {
 		"multiple": {"/dev/serial0", "/dev/serial1"},
 	} {
 		t.Run(id, func(t *testing.T) {
-
 			// Mock the SerialInfra
 			mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: testCase, Error: nil})
 
