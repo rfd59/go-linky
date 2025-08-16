@@ -1,6 +1,6 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-name: CI
+name: Build
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
 
 jobs:
 
-  build:
+  ci:
+    name: Continous Integration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -43,3 +44,18 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: rfd59/go-linky
+  cd-docker:
+    name: Docker
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo Docker
+
+  cd-artifacts:
+    name: Artifacts
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo Artifact
