@@ -49,13 +49,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: golangci/golangci-lint-action@v8
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v8
         continue-on-error: true
         with:
           version: latest
+          
       - name: Run tests
         run: |
           echo tests
