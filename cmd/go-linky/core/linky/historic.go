@@ -59,10 +59,10 @@ func (h *Historic) loadDataset(dataset string) (ld models.LinkyDataset, err erro
 		if len(items[2]) == 1 {
 			ld.Checksum = items[2][0]
 		} else {
-			err = fmt.Errorf("Invalid checksum length: %s", items[2])
+			err = fmt.Errorf("invalid checksum length: %s", items[2])
 		}
 	} else {
-		err = fmt.Errorf("Invalid dataset format: %s", dataset)
+		err = fmt.Errorf("invalid dataset format: %s", dataset)
 	}
 
 	return ld, err

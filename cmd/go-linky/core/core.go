@@ -28,7 +28,7 @@ func Run(settings *models.Settings, linkyService services.ILinkyService, mqttSer
 		// Read until "End TeXt" ETX (0x03) character
 		frame, err := reader.ReadBytes(0x03)
 		if err != nil {
-			return fmt.Errorf("Port is unavailable to read from: %w", err)
+			return fmt.Errorf("port is unavailable to read from: %w", err)
 		}
 
 		// Check if the frame starts with "Start TeXt" STX (0x02) character to have a full frame

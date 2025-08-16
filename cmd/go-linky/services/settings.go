@@ -50,8 +50,6 @@ func (s *SettingsService) loadMqttSettings() {
 	s.settings.Mqtt.Username = s.getEnvironmentSetting("GOLINKY_MQTT_USERNAME", "")
 	s.settings.Mqtt.Password = s.getEnvironmentSetting("GOLINKY_MQTT_PASSWORD", "")
 	s.settings.Mqtt.Topic = s.getEnvironmentSetting("GOLINKY_MQTT_TOPIC", "")
-
-	return
 }
 
 func (s *SettingsService) getEnvironmentSetting(name string, def string) string {
@@ -89,8 +87,6 @@ func (s *SettingsService) getLinkySerialSetting() {
 			StopBits: serial.OneStopBit,
 		}
 	}
-
-	return
 }
 
 func (s *SettingsService) Get() *models.Settings {
