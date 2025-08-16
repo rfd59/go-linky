@@ -49,9 +49,8 @@ jobs:
           go tool cover -func=coverage.out
 
       # 8. Optionnel: publier la couverture sur Codecov
-      - name: Upload coverage to Codecov
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
-          files: coverage.out
-          fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rfd59/go-linky
