@@ -1,7 +1,6 @@
 version: "2"
 
 linters:
-  # default: all
   settings:
     errcheck:
       exclude-functions:
