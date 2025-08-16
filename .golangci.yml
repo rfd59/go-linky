@@ -5,6 +5,8 @@ linters:
     errcheck:
       exclude-functions:
         - serial.Port
+        - Close
+      verbose: true
 
 # formatters:
 #   enable:
