@@ -6,6 +6,7 @@ on:
   push:
     branches-ignore: [main]
   pull_request:
+  workflow_dispatch: 
 
 jobs:
 
@@ -44,7 +45,7 @@ jobs:
   cd-docker:
     name: Continous Delivry - Docker
     needs: ci
-    if: github.event_name == 'octo-org/octo-repo-prod'
+    if: github.ref_name == 'develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -69,7 +70,7 @@ jobs:
   cd-assets:
     name: Continous Delivry - Assets
     needs: ci
-    if: github.repository == 'octo-org/octo-repo-prod'
+    if: github.ref_name == 'develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
