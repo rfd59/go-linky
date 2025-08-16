@@ -100,7 +100,7 @@ func TestLinky_OpenPort_Error(t *testing.T) {
 	// Mock the SerialInfra
 	mInfra := mock_test.InitMockSerialInfra_Open(map[string]mock_test.SerialInfra_Open{"COM1": {
 		Port:  nil,
-		Error: mock_test.MockError,
+		Error: mock_test.ErrMockor,
 	}})
 
 	// Test the OpenSerialPort function

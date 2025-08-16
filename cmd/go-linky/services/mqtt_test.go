@@ -45,7 +45,7 @@ func TestMqtt_Publish_Failed(t *testing.T) {
 	require := require.New(t)
 
 	// Mock
-	mToken := mock_test.InitMockMqttToken(true, mock_test.MockError)
+	mToken := mock_test.InitMockMqttToken(true, mock_test.ErrMockor)
 	mClient := mock_test.InitMockMqttClient_Publish(mToken)
 
 	// Test the GetSerialPort function

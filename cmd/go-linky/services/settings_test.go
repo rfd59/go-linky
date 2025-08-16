@@ -61,7 +61,7 @@ func TestSettings_NewSettingsService_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialService
-	mSerialService := mock_test.InitMockSerialService(mock_test.MockError)
+	mSerialService := mock_test.InitMockSerialService(mock_test.ErrMockor)
 
 	// Test the NewSettingsService function
 	service, err := services.NewSettingsService(mSerialService)

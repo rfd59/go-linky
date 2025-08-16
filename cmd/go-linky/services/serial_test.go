@@ -59,7 +59,7 @@ func TestSerial_GetSerialPort_Error(t *testing.T) {
 	require := require.New(t)
 
 	// Mock the SerialInfra
-	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: mock_test.MockError})
+	mInfra := mock_test.InitMockSerialInfra_GetPortsList(mock_test.SerialInfra_GetPortsList{Ports: nil, Error: mock_test.ErrMockor})
 
 	// Test the GetSerialPort function
 	settings := &models.Serial{Port: "", Mode: nil}
