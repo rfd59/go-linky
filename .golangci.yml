@@ -4,9 +4,7 @@ linters:
   settings:
     errcheck:
       exclude-functions:
-        - serial.Port
-        - Close
-      verbose: true
+        - (go.bug.st/serial.Port).Close
 
 # formatters:
 #   enable:
