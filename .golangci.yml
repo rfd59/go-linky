@@ -1,12 +1,13 @@
-linters:
+formatters:
   enable:
     - errcheck
+
+linters:    
+  settings:
+    errcheck:
+      exclude-functions:
+      - (serial.Port).Close
 
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
-
-linters-settings:
-  errcheck:
-    exclude-functions:
-    - (serial.Port).Close
