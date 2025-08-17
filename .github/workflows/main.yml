@@ -1,16 +1,79 @@
-name: 'Check PR'
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+name: Main
 
 on:
-  pull_request:
-    branches:
+  push:
+    branches: 
       - main
+  workflow_dispatch: 
 
 jobs:
-  check_branch:
-    name: Check PR
+
+  build:
+    name: Tag
     runs-on: ubuntu-latest
     steps:
-      - name: Check origin branch
-        if: github.head_ref != 'develop'
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TAG }}
+          # https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow
+          # https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action
+
+      - name: Extract Tag
         run: |
-          echo "::error::You can only merge to 'main' from 'develop'!" && exit 1
+          set -ex
+          COMMIT_MESSAGE=$(git log -n 1 --pretty=format:%s)
+          TAG=$(echo $COMMIT_MESSAGE | sed -nE 's/^(Release|release) ([0-9]+\.[0-9]+\.[0-9]+) \(#[0-9]+\)$/\2/p')
+
+          if [ -z "$TAG" ]; then
+            echo "::error::The release version can't be found into the commit message!" && exit 1
+          else
+            echo "TAG=$TAG" >> $GITHUB_ENV
+          fi
+
+      - name: Create Tag
+        run: |
+          set -ex
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git tag -a $TAG -m "Release $TAG"
+          git push --follow-tags
+ 
+ 
+  report:
+    name: Codecov
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+    
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Install dependencies
+        run: |
+          go mod download
+          go install github.com/jstemmer/go-junit-report/v2@latest
+ 
+      - name: Run tests
+        run: |
+          go test -v -coverprofile=coverage.out ./cmd/... | go-junit-report -set-exit-code > junit.xml
+
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: rfd59/go-linky
