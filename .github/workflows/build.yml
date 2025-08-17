@@ -1,0 +1,95 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+name: Build
+
+on:
+  push:
+    branches-ignore: 
+      - main
+      - feature/quality
+  pull_request:
+  workflow_dispatch: 
+
+jobs:
+
+  ci:
+    name: Continous Integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          go mod download
+          go install github.com/ctrf-io/go-ctrf-json-reporter/cmd/go-ctrf-json-reporter@latest
+
+      - name: Build
+        run: go build ./...
+
+      - name: Run Uniting-Tests
+        run: go test -json ./cmd/... > go-test.json
+      
+      - name: Publish Uniting-Tests
+        run: |
+            cat go-test.json | go-ctrf-json-reporter -output ctrf-report.json
+            npx github-actions-ctrf summary ctrf-report.json
+            npx github-actions-ctrf failed ctrf-report.json
+        if: always()
+
+
+  cd-docker:
+    name: Continous Delivry - Docker
+    needs: ci
+    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+     
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          file: build/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ vars.IMAGE_NAME}}:snapshot
+
+          
+  cd-assets:
+    name: Continous Delivry - Assets
+    needs: ci
+    if: github.ref_name == 'develop' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          args: release --clean --snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-linky
+          path: |
+            dist/*.tar.gz
+            dist/*.zip

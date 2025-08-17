@@ -1,0 +1,42 @@
+version: "2"
+
+linters:
+  default: all
+  disable:
+    - depguard
+    - wsl_v5
+    - wsl
+    - wrapcheck
+    - varnamelen
+    - revive
+    - paralleltest
+    - noinlineerr
+    - nlreturn
+    - mnd
+    - lll
+    - exhaustruct
+    - ireturn
+    - nonamedreturns
+  settings:
+    errcheck:
+      exclude-functions:
+        - (go.bug.st/serial.Port).Close
+  exclusions:
+    paths:
+      - test/cmd/linky-tic/
+    rules:
+      - path: cmd/go-linky/core/linky/linky.go
+        linters:
+          - cyclop
+          - funlen
+      - path: cmd/go-linky/utils/parse.go
+        linters:
+          - gosec
+
+formatters:
+  enable:
+    - goimports
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

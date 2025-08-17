@@ -1,0 +1,13 @@
+# Add 'enhancement' label to new feature or request
+enhancement:
+  - head-branch: ['^feature', 'feature']
+
+# Add 'bug' label to bug resolution
+bug:
+  - head-branch: ['^bug', 'bug', '^fix', 'fix']
+
+# Add 'release' label to any PR that is opened against the `master` branch
+release:
+  - all:
+    - head-branch: 'develop'
+    - base-branch: 'master'
