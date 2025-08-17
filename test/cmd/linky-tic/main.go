@@ -19,7 +19,7 @@ import (
 func main() {
 	device := "/tmp/ttyV0"
 	datasets := []string{
-		"\nADCO 811775653238 O\r",
+		"\nADCO 123456789000 D\r",
 		"\nOPTARIF BBR( S\r",
 		"\nISOUSC 30 9\r",
 		"\nBBRHCJB 015736771 B\r",
