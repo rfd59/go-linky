@@ -89,7 +89,7 @@ Visit [Wiki](https://github.com/rfd59/go-linky/wiki) pages for the full **Go-Lin
 - With [MQTT Explorer](https://mqtt-explorer.com/), you can check the topic **linky/123456789000** and see the data.
 ---
 
-## ⌨️ Contributing
+## 🧑‍💻 Contributing
 
 Contributions are welcome!
 
