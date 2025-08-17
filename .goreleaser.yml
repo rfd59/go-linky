@@ -49,6 +49,7 @@ changelog:
       - "^docs:"
       - "^test:"
       - "^skip:"
+      - "^release:"
 
 release:
   footer: >-
